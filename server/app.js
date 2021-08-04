@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
+var cors = require('cors');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -25,6 +26,8 @@ mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
 const db = mongoose.connection;
 db.on('error', (error) => console.error(error));
 db.once('on', () => console.log('Connected to Database'));
+
+app.use(cors());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
