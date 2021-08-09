@@ -22,10 +22,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
-const db = mongoose.connection;
-db.on('error', (error) => console.error(error));
-db.once('on', () => console.log('Connected to Database'));
+// mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
+// const db = mongoose.connection;
+// db.on('error', (error) => console.error(error));
+// db.once('on', () => console.log('Connected to Database'));
 
 app.use(cors());
 

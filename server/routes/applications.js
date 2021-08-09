@@ -1,11 +1,13 @@
 var express = require('express');
 var router = express.Router();
 const Application = require('../models/applications');
+const xlsxFunctions = require('../xlsx/xlsx')
 
 /* GET home page. */
 router.get('/', async function(req, res) {
     try {
-        const applications = await Application.find();
+        const applications = await xlsxFunctions.find();
+        //const applications = await Application.find();
         res.json(applications);
     } catch (err) {
         res.status(500).json({ message: err.message});
@@ -23,7 +25,8 @@ router.post('/', async function(req, res) {
         company: req.body.company
     });
     try {
-        const newApplication = await application.save();
+        const newApplication = await xlsxFunctions.post(application);
+        //const newApplication = await application.save();
         res.status(201).json(newApplication);
     } catch(err) {
         res.status(400).json({message: err.message});
@@ -62,7 +65,8 @@ router.delete('/:id', getApplication, async function(req, res) {
 async function getApplication(req, res, next) {
     let application;
     try {
-        application = await Application.findById(req.params.id);
+        application = await xlsxFunctions.findById(req.params.id);
+        //application = await Application.findById(req.params.id);
         if(application == null){
             return res.status(404).json({ message: `Application with id ${req.params.id} not found`})
         }
