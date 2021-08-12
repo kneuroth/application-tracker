@@ -2,6 +2,30 @@ const xlsx = require('xlsx');
 const Algorithms = require('../public/javascripts/algorithms')
 
 
+function remove(record){
+    const data = getDataArray()
+    let index = -1
+    for(let i = 0; i < data.length; i++){
+        if (data[i].id == record){
+            index = i
+        }
+    }
+    if(index == -1){
+        throw 'Data not found'
+    }
+
+    const file = xlsx.readFile("C:/Users/Kelly/OneDrive/Documents/application-tracker/server/xlsx/data.xlsx");
+
+    const worksheet = file.Sheets.Sheet1
+    
+    let sheetJson = xlsx.utils.sheet_to_json(worksheet)
+
+    sheetJson.splice(index, 1)
+
+    file.Sheets.Sheet1 = xlsx.utils.json_to_sheet(sheetJson)
+    
+    xlsx.writeFile(file, "C:/Users/Kelly/OneDrive/Documents/application-tracker/server/xlsx/data.xlsx")
+}
 
 function saveNewRecord(record){
     //console.log(record)
@@ -42,7 +66,6 @@ function getDataArray(){
     for(let i = 0; i < sheets.length; i++){
         const temp = xlsx.utils.sheet_to_json(file.Sheets[file.SheetNames[i]])
         temp.forEach( (res) => {
-            console.log(res)
             data.push(res)
         })
     }
@@ -84,4 +107,4 @@ async function post(record){
     return newRecord
 }
 
-module.exports = { findById, find, post }
+module.exports = { findById, find, post, remove }

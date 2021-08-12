@@ -33,7 +33,7 @@ router.post('/', async function(req, res) {
     }
 });
 
-// Patch is meant to only change things that are send in the request
+// Patch is meant to only change things that are sent in the request
 router.patch('/:id', getApplication, async function(req, res) {
     if(req.body.jobName != null){
         res.application.jobName = req.body.jobName;
@@ -54,7 +54,8 @@ router.patch('/:id', getApplication, async function(req, res) {
 
 router.delete('/:id', getApplication, async function(req, res) {
     try {
-        await res.application.remove();
+        await xlsxFunctions.remove(req.params.id);
+        //await res.application.remove();
         res.json({message: 'Application deleted'});
     } catch (err) {
         res.status(500).json({ message: err.message });
