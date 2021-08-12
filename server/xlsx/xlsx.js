@@ -2,11 +2,11 @@ const xlsx = require('xlsx');
 const Algorithms = require('../public/javascripts/algorithms')
 
 
-function remove(record){
+function deleteRecord(id){
     const data = getDataArray()
     let index = -1
     for(let i = 0; i < data.length; i++){
-        if (data[i].id == record){
+        if (data[i].id == id){
             index = i
         }
     }
@@ -14,7 +14,7 @@ function remove(record){
         throw 'Data not found'
     }
 
-    const file = xlsx.readFile("C:/Users/Kelly/OneDrive/Documents/application-tracker/server/xlsx/data.xlsx");
+    const file = xlsx.readFile(process.env.DATA_FILE);
 
     const worksheet = file.Sheets.Sheet1
     
@@ -24,13 +24,13 @@ function remove(record){
 
     file.Sheets.Sheet1 = xlsx.utils.json_to_sheet(sheetJson)
     
-    xlsx.writeFile(file, "C:/Users/Kelly/OneDrive/Documents/application-tracker/server/xlsx/data.xlsx")
+    xlsx.writeFile(file, process.env.DATA_FILE)
 }
 
 function saveNewRecord(record){
     //console.log(record)
     
-    const file = xlsx.readFile("C:/Users/Kelly/OneDrive/Documents/application-tracker/server/xlsx/data.xlsx");
+    const file = xlsx.readFile(process.env.DATA_FILE);
 
     const worksheets = {}
     for(const sheetName of file.SheetNames){
@@ -51,13 +51,13 @@ function saveNewRecord(record){
     worksheets.Sheet1.push(newRecord)
 
     xlsx.utils.sheet_add_json(file.Sheets["Sheet1"], worksheets.Sheet1)
-    xlsx.writeFile(file, "C:/Users/Kelly/OneDrive/Documents/application-tracker/server/xlsx/data.xlsx")
+    xlsx.writeFile(file, process.env.DATA_FILE)
     
     return newRecord
 }
 
 function getDataArray(){
-    const file = xlsx.readFile("C:/Users/Kelly/OneDrive/Documents/application-tracker/server/xlsx/data.xlsx");
+    const file = xlsx.readFile(process.env.DATA_FILE);
 
     let data = []
 
@@ -73,7 +73,7 @@ function getDataArray(){
 }
 
 function getDataMap(){
-    const file = xlsx.readFile("C:/Users/Kelly/OneDrive/Documents/application-tracker/server/xlsx/data.xlsx");
+    const file = xlsx.readFile(process.env.DATA_FILE);
 
     let data = {}
 
@@ -99,6 +99,12 @@ function find(){
     let data = getDataArray()
 
     return data
+}
+
+async function remove(id){
+    await deleteRecord(id)
+
+    return
 }
 
 async function post(record){
