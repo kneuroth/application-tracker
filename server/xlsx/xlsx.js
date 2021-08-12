@@ -27,6 +27,43 @@ function deleteRecord(id){
     xlsx.writeFile(file, process.env.DATA_FILE)
 }
 
+function editRecord(record){
+    const data = getDataArray()
+    let index = -1
+    for(let i = 0; i < data.length; i++){
+        if (data[i].id == record.id){
+            index = i
+        }
+    }
+    if(index == -1){
+        throw 'Data not found'
+    }
+
+
+    const file = xlsx.readFile(process.env.DATA_FILE);
+
+    const worksheet = file.Sheets.Sheet1
+    
+    let sheetJson = xlsx.utils.sheet_to_json(worksheet)
+
+    console.log(sheetJson[index])
+
+    let keys = Object.keys(sheetJson[index])
+
+    for(let i = 0; i < keys.length; i++){
+        if(keys[i] != 'id'){
+            sheetJson[index][keys[i]] = record[keys[i]]
+        }
+    }
+
+    file.Sheets.Sheet1 = xlsx.utils.json_to_sheet(sheetJson)
+    
+    xlsx.writeFile(file, process.env.DATA_FILE)
+
+    return sheetJson[index]
+
+}
+
 function saveNewRecord(record){
     //console.log(record)
     
@@ -113,4 +150,10 @@ async function post(record){
     return newRecord
 }
 
-module.exports = { findById, find, post, remove }
+async function patch(record){
+    let editedRecord = await editRecord(record)
+
+    return editedRecord
+}
+
+module.exports = { findById, find, post, remove, patch }

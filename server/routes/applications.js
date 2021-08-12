@@ -44,8 +44,10 @@ router.patch('/:id', getApplication, async function(req, res) {
     if(req.body.company != null){
         res.application.company = req.body.company;
     }
+    res.application.id = req.params.id
     try {
-        const updatedApplication = await res.application.save();
+        const updatedApplication = await xlsxFunctions.patch(res.application);
+        //const updatedApplication = await res.application.save();
         res.json(updatedApplication);
     } catch (err) {
         res.status(400).json({ message: err.message });
