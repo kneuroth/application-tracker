@@ -1,5 +1,6 @@
 <template>
 <div>
+  <table></table>
     {{ applications }}
 </div>
 </template>
@@ -16,7 +17,7 @@ export default {
     }
   },
   created: function(){
-    axios.get('http://localhost:8080/applications/')
+    axios.get(process.env.VUE_APP_SERVER_URL+'/applications')
     .then((res) =>{
       this.applications = res.data
     }
