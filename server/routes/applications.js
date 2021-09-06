@@ -22,7 +22,11 @@ router.post('/', async function(req, res) {
     const application = new Application({
         jobName: req.body.jobName,
         jobDescription: req.body.jobDescription,
-        company: req.body.company
+        company: req.body.company,
+        status: req.body.status,
+        statusId: req.body.statusId,
+        country: req.body.country,
+        city: req.body.city
     });
     try {
         const newApplication = await xlsxFunctions.post(application);
@@ -43,6 +47,18 @@ router.patch('/:id', getApplication, async function(req, res) {
     }
     if(req.body.company != null){
         res.application.company = req.body.company;
+    }
+    if(req.body.status != null){
+        res.application.status = req.body.status;
+    }
+    if(req.body.statusId != null){
+        res.application.statusId = req.body.statusId;
+    }
+    if(req.body.country != null){
+        res.application.country = req.body.country;
+    }
+    if(req.body.city != null){
+        res.application.city = req.body.city;
     }
     res.application.id = req.params.id
     try {

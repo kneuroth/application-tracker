@@ -83,6 +83,10 @@ function saveNewRecord(record){
         jobDescription: record.jobDescription,
         company: record.company,
         applyDate: new Date(Date.now('mm/dd/yy')).toISOString(),
+        status: record.status ? record.status : "Sent",
+        statusId: record.statusId ? record.statusId : 0,
+        country: record.country,
+        city: record.city
     }
    
     worksheets.Sheet1.push(newRecord)

@@ -21,6 +21,24 @@ const applicationSchema = new mongoose.Schema({
         type: Date,
         required: true,
         default: Date.now
+    },
+    status: {
+        type: String,
+        required: true,
+        default: "Sent"
+    },
+    statusId: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+    country: {
+        type: String,
+        required: true
+    },
+    city: {
+        type: String,
+        required: false
     }
 } )
 
