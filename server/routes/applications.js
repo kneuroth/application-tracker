@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
 const Application = require('../models/applications');
-const xlsxFunctions = require('../xlsx/xlsx')
+const xlsxFunctions = require('../xlsx/xlsx');
+const verifyInput = require('../public/javascripts/verifyInput');
 
 /* GET home page. */
 router.get('/', async function(req, res) {
@@ -29,6 +30,7 @@ router.post('/', async function(req, res) {
         city: req.body.city
     });
     try {
+        verifyInput.verifyPostApplication(application)
         const newApplication = await xlsxFunctions.post(application);
         //const newApplication = await application.save();
         res.status(201).json(newApplication);
