@@ -4,7 +4,7 @@ const Application = require('../models/applications');
 const xlsxFunctions = require('../xlsx/xlsx');
 const verifyInput = require('../public/javascripts/verifyInput');
 
-/* GET home page. */
+/* GET applications */
 router.get('/', async function(req, res) {
     try {
         const applications = await xlsxFunctions.find();
@@ -35,7 +35,7 @@ router.post('/', async function(req, res) {
         //const newApplication = await application.save();
         res.status(201).json(newApplication);
     } catch(err) {
-        res.status(400).json({message: err.message});
+        res.status(500).json({message: err.message});
     }
 });
 

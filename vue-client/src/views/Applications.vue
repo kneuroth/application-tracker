@@ -1,18 +1,18 @@
 <template>
   <div class="applications">
-    <Applications applications="[1, 2, 3]"/>
+    <ApplicationTable/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 //import Home from '@/components/Home.vue'
-import Applications from '../components/Applications.vue'
+import ApplicationTable from '../components/ApplicationTable.vue'
 
 export default {
   name: 'ApplicationsView',
   components: {
-    Applications
+    ApplicationTable
   }
 }
 </script>

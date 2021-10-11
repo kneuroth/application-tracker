@@ -7,13 +7,9 @@ function verifyPostApplication(application){
     }
     if(application.company == "" || application.company == undefined || application.company == null){
         hasError = true
-        errorString = errorString + "Company name invalid or incomplete \n"
-    }
-    if(application.company == "" || application.company == undefined || application.company == null){
-        hasError = true
         errorString = errorString +  "Company name invalid or incomplete \n"
     }
-    if(application.country == "" || application.country == undefined || application.counrty == null){
+    if(application.country == "" || application.country == undefined || application.country == null){
         hasError = true
         errorString = errorString + "Country name invalid or incomplete \n"
     }

@@ -1,24 +1,30 @@
 <template>
 <div>
-  <form v-on:submit="submitApplication">
-    <label for="jobName">Job Name</label><br>
-    <input type="text" v-model="jobName"/><br><br>
 
-    <label for="jobDescription">Job Description</label><br>
-    <textarea cols="50" rows="6" type="text" v-model="jobDescription"/><br><br>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Job Name</th>
+            <th>Job Description</th>
+            <th>Company</th>
+            <th>Applied</th>
+            <th>Status</th>
+            <th>Country</th>
+            <th>City</th>
+            <th>Delete</th>
+        </tr>
 
-    <label for="company">Company</label><br>
-    <input type="text" v-model="company"/><br><br>
-
-    <label for="country">Country</label><br>
-    <country-select v-model="country" :country="country" topCountry="CA" countryName="true"></country-select><br><br>
-
-    <label >City</label><br>
-    <input type="text" v-model="city"/><br><br>
-
-    <input type="submit" value="submit"/>
-  </form>
-{{applications}}
+        <tr v-for="application in applications" :key="application.id">
+            <th>{{application.id}}</th>
+            <th>{{application.jobName}}</th>
+            <th>{{application.jobDescription}}</th>
+            <th>{{application.company}}</th>
+            <th>{{application.applyDate}}</th>
+            <th>{{application.status}}</th>
+            <th>{{application.country}}</th>
+            <th>{{application.city}}</th>
+        </tr>
+    </table>
 </div>
 </template>
 
@@ -32,14 +38,9 @@ export default {
   },
   data: function(){
     return {
-      applications: [],
-      jobName: "",
-      jobDescription: "",
-      company: "",
-      country: "",
-      city: "",
-
-      polling: null
+      polling: null,
+      columnNames: null,
+      applications: null
     }
   },
   created: function(){
@@ -84,5 +85,7 @@ export default {
 
 
 <style scoped>
-
+table {
+    width: 100%;
+}
 </style>
