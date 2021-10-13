@@ -1,16 +1,15 @@
 <template>
 <div>
-
     <table>
         <tr>
-            <th>ID</th>
-            <th>Job Name</th>
-            <th>Job Description</th>
-            <th>Company</th>
-            <th>Applied</th>
-            <th>Status</th>
-            <th>Country</th>
-            <th>City</th>
+            <th v-on:click="sort('id')">ID</th>
+            <th v-on:click="sort('jobName')">Job Name</th>
+            <th v-on:click="sort('jobDescription')">Job Description</th>
+            <th v-on:click="sort('company')">Company</th>
+            <th v-on:click="sort('applyDate')">Applied</th>
+            <th v-on:click="sort('status')">Status</th>
+            <th v-on:click="sort('country')">Country</th>
+            <th v-on:click="sort('city')">City</th>
             <th>Delete</th>
         </tr>
 
@@ -23,6 +22,7 @@
             <th>{{application.status}}</th>
             <th>{{application.country}}</th>
             <th>{{application.city}}</th>
+            <th v-on:click="deleteApplication(application.id)">DELETE</th>
         </tr>
     </table>
 </div>
@@ -30,8 +30,9 @@
 
 <script>
 import axios from 'axios'
+import { sortBy } from '../../public/javascript/sort'
 export default {
-  name: 'Applications',
+  name: 'ApplicationTable',
   components: {
   },
   props: {
@@ -49,19 +50,37 @@ export default {
   },
   beforeUnmount: function(){
     clearInterval(this.polling)
+    this.applications = []
   },
   methods: {
+
+    sort(field){
+      sortBy(this.applications,  field)
+    },
+
+    pollData(){
+      this.polling = setInterval(() => {
+        this.getApplications()
+      }, 10000)
+    },
+
+
+    deleteApplication(id){
+      axios.delete(process.env.VUE_APP_SERVER_URL+'/applications/'+id)
+      .then(() => {
+        this.getApplications()
+      })
+      
+    },
+
+
     getApplications(){
       axios.get(process.env.VUE_APP_SERVER_URL+'/applications')
       .then((res) =>{
         this.applications = res.data
       })
     },
-    pollData(){
-      this.polling = setInterval(() => {
-        this.getApplications()
-      }, 10000)
-    },
+
     submitApplication(){
       axios.post(process.env.VUE_APP_SERVER_URL+'/applications', {
         jobName: this.jobName,
