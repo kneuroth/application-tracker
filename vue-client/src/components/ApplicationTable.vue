@@ -14,15 +14,15 @@
         </tr>
 
         <tr v-for="application in applications" :key="application.id">
-            <th>{{application.id}}</th>
-            <th>{{application.jobName}}</th>
-            <th>{{application.jobDescription}}</th>
-            <th>{{application.company}}</th>
-            <th>{{application.applyDate}}</th>
-            <th>{{application.status}}</th>
-            <th>{{application.country}}</th>
-            <th>{{application.city}}</th>
-            <th v-on:click="deleteApplication(application.id)">DELETE</th>
+            <td>{{application.id}}</td>
+            <td>{{application.jobName}}</td>
+            <td>{{application.jobDescription}}</td>
+            <td>{{application.company}}</td>
+            <td>{{application.applyDate}}</td>
+            <td>{{application.status}}</td>
+            <td>{{application.country}}</td>
+            <td>{{application.city}}</td>
+            <td class="clickable" v-on:click="deleteApplication(application.id)">DELETE</td>
         </tr>
     </table>
 </div>
@@ -105,6 +105,20 @@ export default {
 
 <style scoped>
 table {
-  width: 100%;
+  
+  width: 90%;
+  margin-left:auto;
+  margin-right:auto;
+  border-collapse: collapse;
+  padding: 10px;
+}
+
+td, th {
+  border: 1px solid #eeeeee;
+  padding: 5px
+}
+
+tr:nth-child(even) {
+  background: #eeeeee
 }
 </style>

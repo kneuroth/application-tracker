@@ -28,7 +28,7 @@
   </div>
 
   <div class="form-input">  
-    <button class="input-box" type="submit" form="application_form">Submit</button>
+    <button class=" submit input-box" type="submit" form="application_form">Submit</button>
   </div>
 </div>
 </template>
@@ -78,12 +78,15 @@ export default {
 
 <style scoped>
 .form-input {
-  margin: 15px;
+  padding: 15px;
 }
 
 .input-box {
-  height: 50px;
   width: 25%
+}
+
+.submit {
+  height: 50px
 }
 
 
